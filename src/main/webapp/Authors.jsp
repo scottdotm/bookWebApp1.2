@@ -34,19 +34,17 @@
                         <c:forEach var="a" items="${authors}">
                             <tr>
 
-                                <td class="danger"> ${a.authorId} </td>
-                                <td class="success"> ${a.authorName} </td>
+                                <td class="info"> ${a.authorId} </td>
+                                <td class="info"> ${a.authorName} </td>
                                 <td class="info">
                                     <fmt:formatDate pattern="MM/dd/yyyy" value="${a.dateAdded}"></fmt:formatDate>
                                     </td>
                                 </tr>
                         </c:forEach>
                     </table>
-                    <br>
-                    <br>
                     <center>
-                        <form id="back" name="back" method="POST" action="Home.jsp">
-                            <input type="submit" name="submit" value="Take me Home">
+                        <form id="back" name="back" method="POST" action="Home.jsp" style="padding:10px;">
+                            <input class="btn btn-info" type="submit" name="submit" value="Take me Home">
                         </form>
                     </center>
                 </div>

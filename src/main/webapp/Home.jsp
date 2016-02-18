@@ -27,14 +27,14 @@
                         <br>
                         <p>This will return all of the authors in our Database.</p>
                         <form id="authors" name="authors" method="POST" action="AuthorController">
-                            <input type="submit" name="submit" value="Show me the Table"/>
+                            <input class="btn btn-info" type="submit" name="submit" value="Show me the Table"/>
                         </form>
                     </div>
                     <div class="col-md-4 col-md-offset-4" id="content">
                         <br>
                         <p>This is a link to my resume created earlier in this class.</p>
                         <form id="resume" name="resume" method="POST" action="/Resume1.2/Resume.jsp">
-                            <input type="submit" name="submit" value="Take me to the Resume">
+                            <input class="btn btn-info" type="submit" name="submit" value="Take me to the Resume">
                         </form>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             <h3>ID of Record you wish to delete</h3>
                             <p>This will return the rest of the records in the database.</p>
                            <input type="text" name="id" min="1" max="3" placeholder="Record ID">
-                           <input type="submit" name="submit" value="Show me the Table">
+                           <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
                     </div>
                 </div>
