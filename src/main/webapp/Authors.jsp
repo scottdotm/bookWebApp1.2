@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Table</title>
+        <title>Author Table</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link href="myCss.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -27,9 +27,9 @@
                     <table class="table table-hover" width="600" border="1" cellspacing="2" cellpadding="5">
 
                         <tr>
-                            <th  class="primary">Author ID</th>
-                            <th  class="primary">Name</th>
-                            <th  class="primary">Date Added</th>
+                            <th  class=" ">Author ID</th>
+                            <th  class=" ">Name</th>
+                            <th  class=" ">Date Added</th>
                         </tr>
                         <c:forEach var="a" items="${authors}">
                             <tr>

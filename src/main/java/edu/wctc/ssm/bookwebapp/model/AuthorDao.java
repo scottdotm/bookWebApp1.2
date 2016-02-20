@@ -29,7 +29,7 @@ public class AuthorDao implements AuthorDaoStrategy {
         db.openConnection(DRIVER, URL, USER, PASSWORD);
 
         List<Map<String, Object>> rawData
-                = db.findAllRecords("authors", 0);
+                = db.findAllRecords("author", 0);
         List<Author> authors = new ArrayList<>();
 
         for (Map rec : rawData) {
@@ -51,14 +51,33 @@ public class AuthorDao implements AuthorDaoStrategy {
     @Override
     public int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException {
         db.openConnection(DRIVER, URL, USER, PASSWORD);
-        int result = db.deleteById("authors", "author_id", id);
+        int result = db.deleteById("author", "author_id", id);
+        db.closeConnection();
+        return result;
+    }
+    
+    @Override
+    public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
+        db.openConnection(DRIVER, URL, USER, PASSWORD);
+        String col1 = "author_name";
+        String col2 = "date_added";
+        List colNames = new ArrayList();
+        List values = new ArrayList();
+        colNames.add(col1);
+        colNames.add(col2);
+        values.add(name);
+        values.add(date);
+        int result = db.createOneRecord("author", colNames, values);
         db.closeConnection();
         return result;
     }
 
-//    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//        AuthorDaoStrategy dao = new MockAuthorDao();
-//        List <Author> authors = dao.getAuthorList();
-//        System.out.println(authors);
-//    }
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        AuthorDaoStrategy dao = new AuthorDao();
+        Date date = new Date();
+        String name = "John Doe";
+        dao.createOneAuthor(name, date);
+        List <Author> authors = dao.getAuthorList();
+        System.out.println(authors);
+    }
 }

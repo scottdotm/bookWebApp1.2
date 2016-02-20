@@ -24,39 +24,40 @@
                     <h1 class="text-center">Web Book App</h1>
                     <br>
                     <div class="col-md-4" id="content">
-                        <br>
-                        <p>This will return all of the authors in our Database.</p>
                         <form id="authors" name="authors" method="POST" action="AuthorController">
+                            <h3>Display Authors</h3>
+                            <p>This will return all of the authors in our Database.</p>
                             <input class="btn btn-info" type="submit" name="submit" value="Show me the Table"/>
                         </form>
                     </div>
                     <div class="col-md-4 col-md-offset-4" id="content">
-                        <br>
-                        <p>This is a link to my resume created earlier in this class.</p>
                         <form id="resume" name="resume" method="POST" action="/Resume1.2/Resume.jsp">
+                            <h3>Resume</h3>
+                            <p>This is a link to my resume created earlier in this class.</p>
                             <input class="btn btn-info" type="submit" name="submit" value="Take me to the Resume">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <br>
         <div class="row">
             <div class ="container">
                 <div id="cont">
                     <div class="col-md-4" id="content">
                         <form id="delete" name="delete" method="POST" action="AuthorController">
-                            <h3>ID of Record you wish to delete</h3>
+                            <h3>Delete Author by ID</h3>
                             <p>This will return the rest of the records in the database.</p>
-                           <input type="text" name="id" min="1" max="3" placeholder="Record ID">
-                           <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
+                            <!--tried making this of type number, however it wasn't retrieving an int or a String, also could not convert it to either 
+                            so it uses a text field which is automatically passed as a String parameter to our Controller (user must use this form in
+                            order to delete a record by its id (only form in charge of deletion-->
+                            <input type="text" name="id" min="1" max="3" placeholder="Record ID to Deleted">
+                            <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <br>
         <br>
         <div class="row">
             <footer class="footer">

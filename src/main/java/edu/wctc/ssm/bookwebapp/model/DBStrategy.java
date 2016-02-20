@@ -26,4 +26,6 @@ public interface DBStrategy {
     public abstract int deleteById(String tableName, String pkColName, Object value) throws SQLException;
 
     public abstract int updateRecordById(String tableName, List<String> colNames, List<Object> colValues, String pkColName, Object value) throws SQLException;
+    
+    public int createOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException;
 }

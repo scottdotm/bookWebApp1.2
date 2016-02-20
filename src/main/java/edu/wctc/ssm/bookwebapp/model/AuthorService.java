@@ -11,15 +11,17 @@ public class AuthorService {
 
     private AuthorDaoStrategy dao = new AuthorDao();
 
-    public List<Author> getAuthorList()
-            throws ClassNotFoundException, SQLException {
+    public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
         return dao.getAuthorList();
     }
 
     public int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException {
         return dao.deleteAuthorById(id);
     }
-
+    public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
+        return dao.createOneAuthor(name, date);
+    }
+    
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //        AuthorService srv = new AuthorService();
 //        srv.deleteAuthorById(1);
