@@ -30,6 +30,12 @@ table{
 #cont{
 /*    background-color:darkgray;*/
 }
+.row{
+    padding:20px;
+}
+.btn-info{
+    padding:10px;
+}
 
 
 

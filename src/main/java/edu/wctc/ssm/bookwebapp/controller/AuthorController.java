@@ -40,17 +40,20 @@ public class AuthorController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
-        //Creating an instance of the AuthorService() - Returns our List, populated from our database
+        String name = request.getParameter("name");
+        String date = request.getParameter("date");
         AuthorService aus = new AuthorService();
+        if(request.getParameter("id") != null && !"".equals(request.getParameter("id"))){
         aus.deleteAuthorById(id);
+        }
+        if(request.getParameter("name") != null && !"".equals(request.getParameter("name"))){
+         aus.createOneAuthor(name, date);   
+        } 
         List<Author> authors = aus.getAuthorList();
         request.setAttribute("authors", authors);
 
         RequestDispatcher view = request.getRequestDispatcher(DEST_PAGE);
         view.forward(request, response);
-//        } else {
-//            
-//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

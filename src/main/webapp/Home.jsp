@@ -40,7 +40,6 @@
                 </div>
             </div>
         </div>
-        <br>
         <div class="row">
             <div class ="container">
                 <div id="cont">
@@ -55,10 +54,18 @@
                             <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
                     </div>
+                    <div class="col-md-4 col-md-offset-4" id="content">
+                        <form id="create" name="create" method="POST" action="AuthorController">
+                            <h3>Create a new Author</h3>
+                            <p>This will return all records in the database, including new record added.</p>
+                            <input type="text" name="name" placeholder="Record Name">
+                            <input type="date" name="date" placeholder="Record Date">
+                            <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <br>
         <div class="row">
             <footer class="footer">
                 <div class="container">
