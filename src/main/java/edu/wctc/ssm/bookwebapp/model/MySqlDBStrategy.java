@@ -90,15 +90,25 @@ public class MySqlDBStrategy implements DBStrategy {
     }
 
     /**
-     *
-     * @param tableName
+	 * Updates one or more records in a table based on a single, matching field value.
+	 * 
+	 * @param tableName - a <code>String</code> representing the table name
      * @param colNames
-     * @param colValues
+	 * @param colDescriptors - a <code>List</code> containing the column descriptors for
+	 * the fields that can be updated.
      * @param pkColName
      * @param value
-     * @return
-     * @throws SQLException
-     */
+	 * @param colValues - a <code>List</code> containing the values for the fields that
+	 * can be updated.
+	 * @param whereField - a <code>String</code> representing the field name for the
+	 * search criteria.
+	 * @param whereValue - n <code>Object</code> containing the value for the search criteria.
+	 * @param closeConnection - true if connection should be closed automatically; if
+	 * false, connection must be explicitly closed using the closeConnection method.
+	 * @return an <code>int</code> containing the number of records updated.
+	 * @throws SQLException if database access error or illegal sql
+	 * @throws Exception for all other problems
+	 */
     @Override
     public int updateRecordById(String tableName, List<String> colNames, List<Object> colValues, String pkColName, Object value) throws SQLException {
         PreparedStatement pstmt = null;
@@ -138,28 +148,32 @@ public class MySqlDBStrategy implements DBStrategy {
 
         return recsUpdated;
     }
-
-    /**
-     *
-     * @param value
-     * @param value2
-     * @return
-     * @throws SQLException
-     */
-//    @Override
-//    public int createNewRecord(String value, String value2) throws SQLException {
-//        //author = tablename, List 
-////                              sql2 = "INSERT INTO actor (first_name,last_name)"
-////                                + " ('Billy','Carter')";
-//    String sql = "INSERT INTO author (author_name,date_added)" + " ('Dan Smith','2003-10-10')";
-//    
-//    PreparedStatement psmt = conn.prepareStatement(sql);
-//    return psmt.executeUpdate();
-//    }
     
-
-    
-    
+    /*
+	 * Builds a java.sql.PreparedStatement for an sql insert
+	 * @param conn - a valid connection
+	 * @param tableName - a <code>String</code> representing the table name
+	 * @param colDescriptors - a <code>List</code> containing the column descriptors for
+	 * the fields that can be inserted.
+	 * @return java.sql.PreparedStatement
+	 * @throws SQLException
+	 */
+//	private PreparedStatement buildInsertStatement(Connection conn_loc, String tableName, List colDescriptors)
+//	throws SQLException {
+//		StringBuffer sql = new StringBuffer("INSERT INTO ");
+//		(sql.append(tableName)).append(" (");
+//		final Iterator i=colDescriptors.iterator();
+//		while( i.hasNext() ) {
+//			(sql.append( (String)i.next() )).append(", ");
+//		}
+//		sql = new StringBuffer( (sql.toString()).substring( 0,(sql.toString()).lastIndexOf(", ") ) + ") VALUES (" );
+//		for( int j = 0; j < colDescriptors.size(); j++ ) {
+//			sql.append("?, ");
+//		}
+//		final String finalSQL=(sql.toString()).substring(0,(sql.toString()).lastIndexOf(", ")) + ")";
+//		//System.out.println(finalSQL);
+//		return conn_loc.prepareStatement(finalSQL);
+//	}
 
     /*
 	 * Builds a java.sql.PreparedStatement for an sql update using only one where clause test
@@ -184,24 +198,33 @@ public class MySqlDBStrategy implements DBStrategy {
         final String finalSQL = sql.toString();
         return conn_loc.prepareStatement(finalSQL);
     }
-    //(String tableName, String pkColName, Object value)
-//    @Override
-//     public int createOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException{
-//    String sql = "INSERT INTO "+tablename+" ("+ colNames.get(0) +" ,"+ colNames.get(1) +")"
-//                           + " VALUES( ? , ? )";
-//    PreparedStatement psmt = conn.prepareStatement(sql);
-//    psmt.setObject(1, values.get(0));
-//    psmt.setObject(2, values.get(1));
-//    return psmt.executeUpdate();
-//     }
-    
+
     @Override
-     public int createOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException{
-    String sql = "INSERT INTO "+tablename+" ("+ colNames.get(0) +" ,"+ colNames.get(1) +")"
-                           + " VALUES( ? , ? )";
-    PreparedStatement psmt = conn.prepareStatement(sql);
-    psmt.setObject(1, values.get(0));
-    psmt.setObject(2, values.get(1));
+     public int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException{
+     StringBuffer sql = new StringBuffer("INSERT INTO "+tablename+" (");
+     sql.append(colNames.get(0)).append(",").append(colNames.get(1)).append(")");
+     sql.append( " VALUES( ? , ? )");
+//     final Iterator e = colNames.iterator();
+//     while(e.hasNext()){
+//         sql.append(e.next().toString());
+//     }
+//     sql.append(") VALUES(");
+//    sql.append( ") VALUES( ? , ? )");
+//    final Iterator g = values.iterator();
+//    while(g.hasNext()){
+//       sql.append("?,"); 
+//    }
+//    sql.append(")");
+    
+    PreparedStatement psmt = conn.prepareStatement(sql.toString());
+    final Iterator i = values.iterator();
+    int index = 1;
+    Object obj = null;
+    while (i.hasNext()) {
+                obj = i.next();
+                psmt.setObject(index++, obj);
+            }
+    
     return psmt.executeUpdate();
      }
      
@@ -222,7 +245,7 @@ public class MySqlDBStrategy implements DBStrategy {
 //        int result = db.updateRecordById("author", colNames, colValues, "author_id", 1);
 //        db.closeConnection();
 //
-        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "root");
+        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");
         Object name = "'Bob Johnson'";
         Object date = new Date();
         String table = "author";
@@ -234,11 +257,10 @@ public class MySqlDBStrategy implements DBStrategy {
         List values = new ArrayList();
         values.add(name);
         values.add(date);
-        //public int createOneRecord(String tablename, List<String> colNames, List<String> values) throws SQLException;
-        db.createOneRecord(table, colNames, values);
+        db.insertOneRecord(table, colNames, values);
         List rawData = db.findAllRecords("author", 0);
         System.out.println(rawData);
-        
+
         db.closeConnection();
     }
 }

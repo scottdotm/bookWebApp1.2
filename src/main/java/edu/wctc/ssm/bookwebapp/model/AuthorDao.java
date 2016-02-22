@@ -22,7 +22,7 @@ public class AuthorDao implements AuthorDaoStrategy {
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/book";
     private final String USER = "root";
-    private final String PASSWORD = "root";
+    private final String PASSWORD = "admin";
 
     @Override
     public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
@@ -67,7 +67,7 @@ public class AuthorDao implements AuthorDaoStrategy {
         colNames.add(col2);
         values.add(name);
         values.add(date);
-        int result = db.createOneRecord("author", colNames, values);
+        int result = db.insertOneRecord("author", colNames, values);
         db.closeConnection();
         return result;
     }
