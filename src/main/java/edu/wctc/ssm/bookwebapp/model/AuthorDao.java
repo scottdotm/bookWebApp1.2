@@ -18,11 +18,16 @@ import java.util.Map;
 //"com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin"
 public class AuthorDao implements AuthorDaoStrategy {
 
-    private DBStrategy db = new MySqlDBStrategy();
+    private final DBStrategy db = new MySqlDBStrategy();
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/book";
     private final String USER = "root";
     private final String PASSWORD = "admin";
+    
+    private final String col1 = "author_name";
+    private final String col2 = "date_added";
+    private final List colNames = new ArrayList();
+    
 
     @Override
     public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
@@ -59,9 +64,9 @@ public class AuthorDao implements AuthorDaoStrategy {
     @Override
     public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
         db.openConnection(DRIVER, URL, USER, PASSWORD);
-        String col1 = "author_name";
-        String col2 = "date_added";
-        List colNames = new ArrayList();
+//        String col1 = "author_name";
+//        String col2 = "date_added";
+//        List colNames = new ArrayList();
         List values = new ArrayList();
         colNames.add(col1);
         colNames.add(col2);
@@ -71,6 +76,13 @@ public class AuthorDao implements AuthorDaoStrategy {
         db.closeConnection();
         return result;
     }
+    
+//    @Override
+//    public int updateAuthor(Object id, Object name, Object date){
+//        colNames.add(col1);
+//        colNames.add(col2);
+//        int result = db.updateRecordById(DRIVER, colNames, values, id, date);
+//    }
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         AuthorDaoStrategy dao = new AuthorDao();

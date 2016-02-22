@@ -8,7 +8,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -199,6 +198,14 @@ public class MySqlDBStrategy implements DBStrategy {
         return conn_loc.prepareStatement(finalSQL);
     }
 
+    /**
+     * Inserts one record into the database, id is created by database.
+     * @param tablename - Name of Table
+     * @param colNames - Names of columns
+     * @param values - Values to be entered into columns
+     * @return
+     * @throws SQLException
+     */
     @Override
     public int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException {
         int recsUpdated = 0;
