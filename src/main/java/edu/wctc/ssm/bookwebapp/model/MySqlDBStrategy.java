@@ -158,22 +158,22 @@ public class MySqlDBStrategy implements DBStrategy {
 	 * @return java.sql.PreparedStatement
 	 * @throws SQLException
 	 */
-//	private PreparedStatement buildInsertStatement(Connection conn_loc, String tableName, List colDescriptors)
-//	throws SQLException {
-//		StringBuffer sql = new StringBuffer("INSERT INTO ");
-//		(sql.append(tableName)).append(" (");
-//		final Iterator i=colDescriptors.iterator();
-//		while( i.hasNext() ) {
-//			(sql.append( (String)i.next() )).append(", ");
-//		}
-//		sql = new StringBuffer( (sql.toString()).substring( 0,(sql.toString()).lastIndexOf(", ") ) + ") VALUES (" );
-//		for( int j = 0; j < colDescriptors.size(); j++ ) {
-//			sql.append("?, ");
-//		}
-//		final String finalSQL=(sql.toString()).substring(0,(sql.toString()).lastIndexOf(", ")) + ")";
-//		//System.out.println(finalSQL);
-//		return conn_loc.prepareStatement(finalSQL);
-//	}
+	private PreparedStatement buildInsertStatement(Connection conn_loc, String tableName, List colDescriptors)
+	throws SQLException {
+		StringBuffer sql = new StringBuffer("INSERT INTO ");
+		(sql.append(tableName)).append(" (");
+		final Iterator i=colDescriptors.iterator();
+		while( i.hasNext() ) {
+			(sql.append( (String)i.next() )).append(", ");
+		}
+		sql = new StringBuffer( (sql.toString()).substring( 0,(sql.toString()).lastIndexOf(", ") ) + ") VALUES (" );
+		for( int j = 0; j < colDescriptors.size(); j++ ) {
+			sql.append("?, ");
+		}
+		final String finalSQL=(sql.toString()).substring(0,(sql.toString()).lastIndexOf(", ")) + ")";
+		//System.out.println(finalSQL);
+		return conn_loc.prepareStatement(finalSQL);
+	}
 
     /*
 	 * Builds a java.sql.PreparedStatement for an sql update using only one where clause test
@@ -200,33 +200,27 @@ public class MySqlDBStrategy implements DBStrategy {
     }
 
     @Override
-     public int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException{
-     StringBuffer sql = new StringBuffer("INSERT INTO "+tablename+" (");
-     sql.append(colNames.get(0)).append(",").append(colNames.get(1)).append(")");
-     sql.append( " VALUES( ? , ? )");
-//     final Iterator e = colNames.iterator();
-//     while(e.hasNext()){
-//         sql.append(e.next().toString());
-//     }
-//     sql.append(") VALUES(");
-//    sql.append( ") VALUES( ? , ? )");
-//    final Iterator g = values.iterator();
-//    while(g.hasNext()){
-//       sql.append("?,"); 
-//    }
-//    sql.append(")");
-    
-    PreparedStatement psmt = conn.prepareStatement(sql.toString());
-    final Iterator i = values.iterator();
-    int index = 1;
-    Object obj = null;
-    while (i.hasNext()) {
+    public int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException {
+        int recsUpdated = 0;
+        try {
+            PreparedStatement psmt = buildInsertStatement(conn, tablename, colNames);
+            final Iterator i = values.iterator();
+            int index = 1;
+            Object obj = null;
+            while (i.hasNext()) {
                 obj = i.next();
                 psmt.setObject(index++, obj);
             }
-    
-    return psmt.executeUpdate();
-     }
+            recsUpdated = psmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw sqle;
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return recsUpdated;
+    }
      
      //    @Override
 //    public int deleteById(String tableName, String pkColName, Object value) throws SQLException {
