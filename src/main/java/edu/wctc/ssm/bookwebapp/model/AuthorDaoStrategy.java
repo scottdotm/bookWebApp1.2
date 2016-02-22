@@ -20,6 +20,6 @@ public interface AuthorDaoStrategy {
     
     public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException;
     
-//    public int updateAuthor() throws ClassNotFoundException, SQLException;
+    public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException;
 
 }

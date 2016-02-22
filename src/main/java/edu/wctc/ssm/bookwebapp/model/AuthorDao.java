@@ -27,6 +27,7 @@ public class AuthorDao implements AuthorDaoStrategy {
     private final String col1 = "author_name";
     private final String col2 = "date_added";
     private final List colNames = new ArrayList();
+    private final List values = new ArrayList();
     
 
     @Override
@@ -77,19 +78,30 @@ public class AuthorDao implements AuthorDaoStrategy {
         return result;
     }
     
-//    @Override
-//    public int updateAuthor(Object id, Object name, Object date){
-//        colNames.add(col1);
-//        colNames.add(col2);
-//        int result = db.updateRecordById(DRIVER, colNames, values, id, date);
-//    }
-
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        AuthorDaoStrategy dao = new AuthorDao();
-        Date date = new Date();
-        String name = "John Doe";
-        dao.createOneAuthor(name, date);
-        List <Author> authors = dao.getAuthorList();
-        System.out.println(authors);
+    @Override
+    public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException{
+        colNames.add(col1);
+        colNames.add(col2);
+        values.add(name);
+//        if(date != null){
+            values.add(date);
+//        } else {
+//            values.add(new Date());
+//        }
+        //db.updateRecordById("author", colNames, colValues, "author_id", 33);
+        db.openConnection(DRIVER, URL, USER, PASSWORD);
+        int result = db.updateRecordById("author", colNames, values, "author_id", id);
+        db.closeConnection();
+        return result;
     }
+
+//    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+//        AuthorDaoStrategy dao = new AuthorDao();
+//        Date date = new Date();
+//        String name = "John Doe";
+//        dao.createOneAuthor(name, date);
+//        dao.updateAuthor(28, "Jim L.", 0);
+//        List <Author> authors = dao.getAuthorList();
+//        System.out.println(authors);
+//    }
 }

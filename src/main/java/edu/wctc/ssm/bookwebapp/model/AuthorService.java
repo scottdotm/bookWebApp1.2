@@ -21,6 +21,10 @@ public class AuthorService {
     public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
         return dao.createOneAuthor(name, date);
     }
+    //public int updateAuthor(Object id, Object name, Object date)
+    public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException{
+        return dao.updateAuthor(id, name, date);
+    }
     
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //        AuthorService srv = new AuthorService();

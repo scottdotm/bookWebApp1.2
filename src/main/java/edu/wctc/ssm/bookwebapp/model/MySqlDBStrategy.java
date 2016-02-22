@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -240,10 +241,14 @@ public class MySqlDBStrategy implements DBStrategy {
     //Testing
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //        DBStrategy db = new MySqlDBStrategy();
-//        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin");
+//        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");
 //        List<String> colNames = Arrays.asList("author_name", "date_added");
 //        List<Object> colValues = Arrays.asList("Lucifer", "2000-11-11");
-//        int result = db.updateRecordById("author", colNames, colValues, "author_id", 1);
+//        int result = db.updateRecordById("author", colNames, colValues, "author_id", 33);
+//        db.closeConnection();
+//        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");
+//        List rawData = db.findAllRecords("author", 0);
+//        System.out.println(rawData);
 //        db.closeConnection();
 //
 //        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");

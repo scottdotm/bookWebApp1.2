@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.wctc.ssm.bookwebapp.model.Author;
 import edu.wctc.ssm.bookwebapp.model.AuthorService;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +48,11 @@ public class AuthorController extends HttpServlet {
         aus.deleteAuthorById(id);
         }
         if(request.getParameter("name") != null && !"".equals(request.getParameter("name"))){
-         aus.createOneAuthor(name, date);   
+            if(request.getParameter("date")!=null && !"".equals(request.getParameter("date"))){
+                aus.createOneAuthor(name, date);
+            } else {
+                aus.createOneAuthor(name, new Date());
+            }
         } 
         List<Author> authors = aus.getAuthorList();
         request.setAttribute("authors", authors);
