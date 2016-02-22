@@ -55,11 +55,30 @@
                         <form id="create" name="create" method="POST" action="AuthorController">
                             <h3>Create a new Author</h3>
                             <p>This will return all records in the database, including new record added.</p>
-                            <input type="text" name="name" placeholder="Record Name">
-                            <input type="date" name="date" placeholder="Record Date">
+                            <input type="text" name="createname" placeholder="Record Name">
+                            <input type="date" name="createdate" placeholder="Record Date">
                             <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class ="container">
+                <div id="cont">
+                    <div class="col-md-4" id="content">
+                        <form id="update" name="update" method="POST" action="AuthorController">
+                            <h3>Update Author by ID</h3>
+                            <p>This will return all records in Database - Including update.</p>
+                            <input type="text" name="updateid" placeholder="Record ID">
+                            <input type="text" name="updatename" placeholder="Name">
+                            <br>
+                            <br>
+                            <input type="date" name="updatedate" placeholder="Date">
+                            <br>
+                            <br>
+                            <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
+                        </form>
                 </div>
             </div>
         </div>

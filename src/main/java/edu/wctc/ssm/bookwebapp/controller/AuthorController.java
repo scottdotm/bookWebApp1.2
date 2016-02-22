@@ -41,19 +41,29 @@ public class AuthorController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
-        String name = request.getParameter("name");
-        String date = request.getParameter("date");
+        String name = request.getParameter("createname");
+        String date = request.getParameter("createdate");
+        String updateId = request.getParameter("updateid");
+        String updateName = request.getParameter("updatename");
+        String updateDate = request.getParameter("updatedate");
         AuthorService aus = new AuthorService();
+        //delete
         if(request.getParameter("id") != null && !"".equals(request.getParameter("id"))){
         aus.deleteAuthorById(id);
         }
-        if(request.getParameter("name") != null && !"".equals(request.getParameter("name"))){
-            if(request.getParameter("date")!=null && !"".equals(request.getParameter("date"))){
+        //create
+        if(request.getParameter("createname") != null && !"".equals(request.getParameter("createname"))){
+            if(request.getParameter("createdate")!=null && !"".equals(request.getParameter("creaetdate"))){
                 aus.createOneAuthor(name, date);
             } else {
                 aus.createOneAuthor(name, new Date());
             }
-        } 
+        }
+        //update
+        if(request.getParameter("updateid")!= null&& !"".equals(request.getParameter("updateid"))){
+            aus.updateAuthor(updateId, updateName, updateDate);
+        }
+        //display table
         List<Author> authors = aus.getAuthorList();
         request.setAttribute("authors", authors);
 
