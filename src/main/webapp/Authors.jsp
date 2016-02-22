@@ -25,7 +25,6 @@
                         <p>Displayed a List of Author objects created in our AuthorService().  This is not currently hooked up to a Database. </p>
                     </div>
                     <table class="table table-hover" width="600" border="1" cellspacing="2" cellpadding="5">
-
                         <tr>
                             <th  class=" ">Author ID</th>
                             <th  class=" ">Name</th>
@@ -33,13 +32,10 @@
                         </tr>
                         <c:forEach var="a" items="${authors}">
                             <tr>
-
                                 <td class="info"> ${a.authorId} </td>
                                 <td class="info"> ${a.authorName} </td>
-                                <td class="info">
-                                    <fmt:formatDate pattern="MM/dd/yyyy" value="${a.dateAdded}"></fmt:formatDate>
-                                    </td>
-                                </tr>
+                                <td class="info"><fmt:formatDate pattern="MM/dd/yyyy" value="${a.dateAdded}"></fmt:formatDate></td>
+                            </tr>
                         </c:forEach>
                     </table>
                     <center>

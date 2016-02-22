@@ -47,9 +47,6 @@
                         <form id="delete" name="delete" method="POST" action="AuthorController">
                             <h3>Delete Author by ID</h3>
                             <p>This will return the rest of the records in the database.</p>
-                            <!--tried making this of type number, however it wasn't retrieving an int or a String, also could not convert it to either 
-                            so it uses a text field which is automatically passed as a String parameter to our Controller (user must use this form in
-                            order to delete a record by its id (only form in charge of deletion-->
                             <input type="text" name="id" min="1" max="3" placeholder="Record ID to Deleted">
                             <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
