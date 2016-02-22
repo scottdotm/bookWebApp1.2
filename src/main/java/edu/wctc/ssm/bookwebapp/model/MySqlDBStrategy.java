@@ -231,30 +231,30 @@ public class MySqlDBStrategy implements DBStrategy {
 //    }
 
     //Testing
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        DBStrategy db = new MySqlDBStrategy();
+//    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+//        DBStrategy db = new MySqlDBStrategy();
 //        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin");
 //        List<String> colNames = Arrays.asList("author_name", "date_added");
 //        List<Object> colValues = Arrays.asList("Lucifer", "2000-11-11");
 //        int result = db.updateRecordById("author", colNames, colValues, "author_id", 1);
 //        db.closeConnection();
 //
-        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");
-        Object name = "'Bob Johnson'";
-        Object date = new Date();
-        String table = "author";
-        String col1 = "author_name";
-        String col2 = "date_added";
-        List colNames = new ArrayList();
-        colNames.add(col1);
-        colNames.add(col2);
-        List values = new ArrayList();
-        values.add(name);
-        values.add(date);
-        db.insertOneRecord(table, colNames, values);
-        List rawData = db.findAllRecords("author", 0);
-        System.out.println(rawData);
-
-        db.closeConnection();
-    }
+//        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/book", "root", "admin");
+//        Object name = "'Bob Johnson'";
+//        Object date = new Date();
+//        String table = "author";
+//        String col1 = "author_name";
+//        String col2 = "date_added";
+//        List colNames = new ArrayList();
+//        colNames.add(col1);
+//        colNames.add(col2);
+//        List values = new ArrayList();
+//        values.add(name);
+//        values.add(date);
+//        db.insertOneRecord(table, colNames, values);
+//        List rawData = db.findAllRecords("author", 0);
+//        System.out.println(rawData);
+//
+//        db.closeConnection();
+//    }
 }
