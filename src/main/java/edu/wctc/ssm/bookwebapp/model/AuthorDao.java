@@ -5,25 +5,29 @@
  */
 package edu.wctc.ssm.bookwebapp.model;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author Scott
  */
 //"com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin"
-public class AuthorDao implements AuthorDaoStrategy {
+@SessionScoped
+public class AuthorDao implements AuthorDaoStrategy,Serializable {
 
-    private final DBStrategy db = new MySqlDBStrategy();
+    @Inject
+    private DBStrategy db;
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/book";
     private final String USER = "root";
     private final String PASSWORD = "admin";
-    
     private final String col1 = "author_name";
     private final String col2 = "date_added";
     private final List colNames = new ArrayList();
@@ -93,6 +97,14 @@ public class AuthorDao implements AuthorDaoStrategy {
         int result = db.updateRecordById("author", colNames, values, "author_id", id);
         db.closeConnection();
         return result;
+    }
+
+    public DBStrategy getDb() {
+        return db;
+    }
+
+    public void setDb(DBStrategy db) {
+        this.db = db;
     }
 
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {

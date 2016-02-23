@@ -21,5 +21,9 @@ public interface AuthorDaoStrategy {
     public abstract int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException;
     
     public abstract int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException;
+    
+    public DBStrategy getDb();
+    
+    public void setDb(DBStrategy db);
 
 }

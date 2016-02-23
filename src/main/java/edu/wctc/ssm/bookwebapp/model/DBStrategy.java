@@ -15,17 +15,17 @@ import java.util.Map;
  */
 public interface DBStrategy {
 
-    public abstract void openConnection(String driverClass, String url,
+    abstract void openConnection(String driverClass, String url,
             String userName, String password)
             throws ClassNotFoundException, SQLException;
 
-    public abstract void closeConnection() throws SQLException;
+    abstract void closeConnection() throws SQLException;
 
-    public abstract List<Map<String, Object>> findAllRecords(String tableName, int maxRecords) throws SQLException;
+    abstract List<Map<String, Object>> findAllRecords(String tableName, int maxRecords) throws SQLException;
 
-    public abstract int deleteById(String tableName, String pkColName, Object value) throws SQLException;
+    abstract int deleteById(String tableName, String pkColName, Object value) throws SQLException;
 
-    public abstract int updateRecordById(String tableName, List<String> colNames, List<Object> colValues, String pkColName, Object value) throws SQLException;
+    abstract int updateRecordById(String tableName, List<String> colNames, List<Object> colValues, String pkColName, Object value) throws SQLException;
     
-    public abstract int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException;
+    abstract int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException;
 }

@@ -1,15 +1,23 @@
 package edu.wctc.ssm.bookwebapp.model;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Alternative;
 
 /**
  *
  * @author Scott
  */
-public class MockAuthorDao implements AuthorDaoStrategy {
+@Alternative
+@SessionScoped
+public class MockAuthorDao implements AuthorDaoStrategy,Serializable {
+    
+    private DBStrategy db;
+    private List<Author> authors;
 
     @Override
     public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
@@ -40,4 +48,22 @@ public class MockAuthorDao implements AuthorDaoStrategy {
     public int updateAuthor(Object id, Object name, Object date){
         return 1;
     }
+
+    public DBStrategy getDb() {
+        return db;
+    }
+
+    public void setDb(DBStrategy db) {
+        this.db = db;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+    
+    
 }

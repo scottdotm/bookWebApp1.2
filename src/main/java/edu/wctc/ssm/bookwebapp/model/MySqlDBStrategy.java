@@ -1,5 +1,6 @@
 package edu.wctc.ssm.bookwebapp.model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,19 +9,24 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.context.SessionScoped;
 
 /**
  * Allows generic access of our SQL database.
  * @author Scott
  */
-public class MySqlDBStrategy implements DBStrategy {
+@SessionScoped
+public class MySqlDBStrategy implements DBStrategy,Serializable {
 
     private Connection conn;
+    
+    /** default constructor needed for dependency injection */
+    public MySqlDBStrategy() {
+    }
 
     @Override
     public void openConnection(String driverClass, String url,

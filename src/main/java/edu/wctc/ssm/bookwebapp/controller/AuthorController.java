@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.inject.Inject;
 
 /**
  * This servlet takes care of the interaction between the View(interface) and
@@ -23,6 +24,8 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "AuthorController", urlPatterns = {"/AuthorController"})
 public class AuthorController extends HttpServlet {
+    @Inject
+    AuthorService aus;
 
     private static final String DEST_PAGE = "Authors.jsp";
 
@@ -46,7 +49,7 @@ public class AuthorController extends HttpServlet {
         String updateId = request.getParameter("updateid");
         String updateName = request.getParameter("updatename");
         String updateDate = request.getParameter("updatedate");
-        AuthorService aus = new AuthorService();
+        
         //delete
         if(request.getParameter("id") != null && !"".equals(request.getParameter("id"))){
         aus.deleteAuthorById(id);

@@ -8,9 +8,9 @@ import java.util.Date;
  */
 public class Author {
 
-    int authorId;
-    String authorName;
-    Date dateAdded;
+    private int authorId;
+    private String authorName;
+    private Date dateAdded;
 
     public Author() {
     }
