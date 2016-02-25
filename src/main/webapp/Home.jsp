@@ -21,7 +21,7 @@
             <div class ="container">
                 <div id="cont">
                     <br>
-                    <h1 class="text-center">Web Book App</h1>
+                    <h1 class="text-center">Admin Page</h1>
                     <br>
                     <div class="col-md-4" id="content">
                         <form id="authors" name="authors" method="POST" action="AuthorController">
