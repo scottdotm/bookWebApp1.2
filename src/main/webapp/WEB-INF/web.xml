@@ -29,6 +29,10 @@
         <param-value>author_name</param-value>
     </context-param>
     <context-param>
+        <param-name>db.coltwo</param-name>
+        <param-value>date_added</param-value>
+    </context-param>
+    <context-param>
         <param-name>db.primarykey</param-name>
         <param-value>author_id</param-value>
     </context-param>

@@ -3,14 +3,14 @@ package edu.wctc.ssm.bookwebapp.model;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 /**
  *
  * @author Scott
  */
-@SessionScoped
+@Dependent
 public class AuthorService implements Serializable {
 
     public AuthorService() {

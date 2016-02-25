@@ -34,6 +34,7 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
     private final List COLNAMES = new ArrayList();
     private final List VALUES = new ArrayList();
     
+    
     /**
      * Blank Constructor for injectable objects
      */
