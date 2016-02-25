@@ -54,6 +54,7 @@ public class AuthorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        try{
         configDbConnection();
         String deleteId = request.getParameter("deleteid");
         String name = request.getParameter("createname");
@@ -67,11 +68,11 @@ public class AuthorController extends HttpServlet {
         aus.deleteAuthorById(deleteId);
         }
         //create
-        if(name != null && !"".equals(name) && date!=null && !"".equals(date)){
-                aus.createOneAuthor(name, date);
-        } else if (name != null && !"".equals(name) && date==null || "".equals(date)) {
-                aus.createOneAuthor(name, new Date());
-            }
+        if (name != null && !"".equals(name) && date != null && !"".equals(date)) {
+            aus.createOneAuthor(name, date);
+        } else if (name != null && !"".equals(name) && date == null || "".equals(date)) {
+            aus.createOneAuthor(name, new Date());
+        }
         //update
         if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && date != null && !"".equals(updateDate)) {
             aus.updateAuthor(updateId, updateName, updateDate);
@@ -81,6 +82,10 @@ public class AuthorController extends HttpServlet {
         //display table
         List<Author> authors = aus.getAuthorList();
         request.setAttribute("authors", authors);
+        
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AuthorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         RequestDispatcher view = request.getRequestDispatcher(DEST_PAGE);
         view.forward(request, response);
