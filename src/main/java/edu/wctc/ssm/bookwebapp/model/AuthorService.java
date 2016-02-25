@@ -13,6 +13,9 @@ import javax.inject.Inject;
 @SessionScoped
 public class AuthorService implements Serializable {
 
+    public AuthorService() {
+    }
+
     @Inject
     private AuthorDaoStrategy dao;
 
@@ -23,20 +26,14 @@ public class AuthorService implements Serializable {
     public int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException {
         return dao.deleteAuthorById(id);
     }
-    public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
+
+    public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException {
         return dao.createOneAuthor(name, date);
     }
-    public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException{
+
+    public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException {
         return dao.updateAuthor(id, name, date);
     }
-    
-    
-//    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//        AuthorService srv = new AuthorService();
-//        srv.deleteAuthorById(1);
-//        List<Author> authors = srv.getAuthorList();
-//        System.out.println(authors);
-//    }
 
     public AuthorDaoStrategy getDao() {
         return dao;

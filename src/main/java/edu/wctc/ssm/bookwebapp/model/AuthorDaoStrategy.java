@@ -17,13 +17,31 @@ public interface AuthorDaoStrategy {
     List<Author> getAuthorList() throws ClassNotFoundException, SQLException;
 
     public abstract int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException;
-    
+
     public abstract int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException;
-    
+
     public abstract int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException;
-    
+
     public DBStrategy getDb();
-    
+
     public void setDb(DBStrategy db);
+
+    public void initDao(String driver, String url, String user, String pass);
+
+    public void setDRIVER(String DRIVER);
+
+    public void setURL(String URL);
+
+    public void setUSER(String USER);
+
+    public void setPASSWORD(String PASSWORD);
+
+    public String getPASSWORD();
+
+    public String getUSER();
+
+    public String getURL();
+
+    public String getDRIVER();
 
 }

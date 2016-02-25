@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 
 /**
  * Allows generic access of our SQL database.
  * @author Scott
  */
-@SessionScoped
+@Dependent
 public class MySqlDBStrategy implements DBStrategy,Serializable {
 
     private Connection conn;
@@ -234,6 +234,43 @@ public class MySqlDBStrategy implements DBStrategy,Serializable {
         }
 
         return recsUpdated;
+    }
+    
+    @Override
+    public final Map<String, Object> findById(String tableName, String primaryKeyFieldName,
+            Object primaryKeyValue) throws SQLException {
+
+        String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKeyFieldName + " = ?";
+        PreparedStatement stmt = null;
+        final Map<String, Object> record = new HashMap();
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setObject(1, primaryKeyValue);
+            ResultSet rs = stmt.executeQuery();
+            final ResultSetMetaData metaData = rs.getMetaData();
+            final int fields = metaData.getColumnCount();
+
+            // Retrieve the raw data from the ResultSet and copy the values into a Map
+            // with the keys being the column names of the table.
+            if (rs.next()) {
+                for (int i = 1; i <= fields; i++) {
+                    record.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage(),e.getCause());
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new SQLException(e.getMessage(),e.getCause());
+            } // end try
+        } // end finally
+
+        return record;
     }
      
      //    @Override

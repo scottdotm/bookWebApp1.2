@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 /**
@@ -19,27 +19,36 @@ import javax.inject.Inject;
  * @author Scott
  */
 //"com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin"
-@SessionScoped
+@Dependent
 public class AuthorDao implements AuthorDaoStrategy,Serializable {
 
     @Inject
     private DBStrategy db;
-    private final String DRIVER = "com.mysql.jdbc.Driver";
-    private final String URL = "jdbc:mysql://localhost:3306/book";
-    private final String USER = "root";
-    private final String PASSWORD = "admin";
-    private final String col1 = "author_name";
-    private final String col2 = "date_added";
-    private final List colNames = new ArrayList();
-    private final List values = new ArrayList();
+    private String driver;
+    private String url;
+    private String user;
+    private String pass;
+    private final String TABLE = "author";
+    private final String COLONE = "author_name";
+    private final String COLTWO = "date_added";
+    private final List COLNAMES = new ArrayList();
+    private final List VALUES = new ArrayList();
+    
+    @Override
+    public void initDao(String driver, String url, String user, String pass){
+        setDRIVER(driver);
+        setURL(url);
+        setUSER(user);
+        setPASSWORD(pass);
+    }
     
 
     @Override
     public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
-        db.openConnection(DRIVER, URL, USER, PASSWORD);
+        db.openConnection(driver, url, user, pass);
 
         List<Map<String, Object>> rawData
-                = db.findAllRecords("author", 0);
+                = db.findAllRecords(TABLE, 0);
         List<Author> authors = new ArrayList<>();
 
         for (Map rec : rawData) {
@@ -60,49 +69,82 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
 
     @Override
     public int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException {
-        db.openConnection(DRIVER, URL, USER, PASSWORD);
-        int result = db.deleteById("author", "author_id", id);
+        db.openConnection(driver, url, user, pass);
+        int result = db.deleteById(TABLE, "author_id", id);
         db.closeConnection();
         return result;
     }
     
     @Override
     public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
-        db.openConnection(DRIVER, URL, USER, PASSWORD);
-//        String col1 = "author_name";
-//        String col2 = "date_added";
-//        List colNames = new ArrayList();
-        List values = new ArrayList();
-        colNames.add(col1);
-        colNames.add(col2);
-        values.add(name);
-        values.add(date);
-        int result = db.insertOneRecord("author", colNames, values);
+        db.openConnection(driver, url, user, pass);
+        COLNAMES.add(COLONE);
+        COLNAMES.add(COLTWO);
+        VALUES.add(name);
+        VALUES.add(date);
+        int result = db.insertOneRecord(TABLE, COLNAMES, VALUES);
         db.closeConnection();
         return result;
     }
     
     @Override
     public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException{
-        colNames.add(col1);
-        colNames.add(col2);
-        values.add(name);
-//        if(date != null){
-            values.add(date);
-//        } else {
-//            values.add(new Date());
-//        }
-        //db.updateRecordById("author", colNames, colValues, "author_id", 33);
-        db.openConnection(DRIVER, URL, USER, PASSWORD);
-        int result = db.updateRecordById("author", colNames, values, "author_id", id);
+        COLNAMES.add(COLONE);
+        COLNAMES.add(COLTWO);
+        VALUES.add(name);
+        VALUES.add(date);
+        db.openConnection(driver, url, user, pass);
+        int result = db.updateRecordById(TABLE, COLNAMES, VALUES, "author_id", id);
         db.closeConnection();
         return result;
     }
 
+    @Override
+    public String getDRIVER() {
+        return driver;
+    }
+
+    @Override
+    public String getURL() {
+        return url;
+    }
+
+    @Override
+    public String getUSER() {
+        return user;
+    }
+
+    @Override
+    public String getPASSWORD() {
+        return pass;
+    }
+
+    @Override
+    public void setDRIVER(String DRIVER) {
+        this.driver = DRIVER;
+    }
+
+    @Override
+    public void setURL(String URL) {
+        this.url = URL;
+    }
+
+    @Override
+    public void setUSER(String USER) {
+        this.user = USER;
+    }
+
+    @Override
+    public void setPASSWORD(String PASSWORD) {
+        this.pass = PASSWORD;
+    }
+
+    @Override
     public DBStrategy getDb() {
         return db;
     }
 
+    @Override
     public void setDb(DBStrategy db) {
         this.db = db;
     }
