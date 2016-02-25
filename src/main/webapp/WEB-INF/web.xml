@@ -20,6 +20,18 @@
         <param-name>db.password</param-name>
         <param-value>admin</param-value>
     </context-param>
+    <context-param>
+        <param-name>db.table</param-name>
+        <param-value>author</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.colone</param-name>
+        <param-value>author_name</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.primarykey</param-name>
+        <param-value>author_id</param-value>
+    </context-param>
     <session-config>
         <session-timeout>
             30

@@ -25,11 +25,16 @@ import javax.inject.Inject;
 @WebServlet(name = "AuthorController", urlPatterns = {"/AuthorController"})
 public class AuthorController extends HttpServlet {
     
+    // db config init params from web.xml
     private String driverClass;
     private String url;
     private String username;
     private String password;
-    
+    private String table;
+    private String colone;
+    private String coltwo;
+    private String primarykey;
+
     @Inject
     AuthorService aus;
 
@@ -58,36 +63,38 @@ public class AuthorController extends HttpServlet {
         String updateDate = request.getParameter("updatedate");
         
         //delete
-        if(request.getParameter("id") != null && !"".equals(request.getParameter("id"))){
+        if(id != null && !"".equals(id)){
         aus.deleteAuthorById(id);
         }
         //create
-        if(request.getParameter("createname") != null && !"".equals(request.getParameter("createname"))){
-            if(request.getParameter("createdate")!=null && !"".equals(request.getParameter("creaetdate"))){
+        if(name != null && !"".equals(name)){
+            if(date!=null && !"".equals(date)){
                 aus.createOneAuthor(name, date);
-            } else if (request.getParameter("createdate")==null || "".equals(request.getParameter("creaetdate"))) {
+            } else if (date==null || "".equals(date)) {
                 aus.createOneAuthor(name, new Date());
             }
         }
         //update
-        if(request.getParameter("updateid") != null && !"".equals(request.getParameter("updateid"))) {
-            if (request.getParameter("updatename") != null && !"".equals(request.getParameter("updatename"))) {
-                if (request.getParameter("updatedate") != null && !"".equals(request.getParameter("updatedate"))) {
+        if(id != null && !"".equals(id)) {
+            if (name != null && !"".equals(name)) {
+                if (date != null && !"".equals(date)) {
                     aus.updateAuthor(updateId, updateName, updateDate);
-                } else if (request.getParameter("updatedate") == null || "".equals(request.getParameter("updatedate"))) {
+                } else if (date == null || "".equals(date)) {
                     aus.updateAuthor(updateId, updateName, new Date());
                 }
             }
         }
         //display table
         List<Author> authors = aus.getAuthorList();
-        request.setAttribute("authors", authors);
+        request.setAttribute(table, authors);
 
         RequestDispatcher view = request.getRequestDispatcher(DEST_PAGE);
         view.forward(request, response);
     }
+    
+    //web.xml config
     private void configDbConnection() {
-        aus.getDao().initDao(driverClass, url, username, password);
+        aus.getDao().initDao(driverClass, url, username, password, table, colone, coltwo, primarykey);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -136,12 +143,17 @@ public class AuthorController extends HttpServlet {
     public String getServletInfo() {
         return "Book Web App made for Dist. Java";
     }// </editor-fold>
+    //Override for web.xml
     @Override
     public void init() throws ServletException{
         driverClass = getServletContext().getInitParameter("db.driver.class");
         url = getServletContext().getInitParameter("db.url");
         username = getServletContext().getInitParameter("db.username");
         password = getServletContext().getInitParameter("db.password");
+        table = getServletContext().getInitParameter("db.table");
+        colone = getServletContext().getInitParameter("db.colone");
+        coltwo = getServletContext().getInitParameter("db.coltwo");
+        primarykey = getServletContext().getInitParameter("db.primarykey");
         
     }
 }

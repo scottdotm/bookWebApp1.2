@@ -16,7 +16,7 @@ public interface AuthorDaoStrategy {
 
     List<Author> getAuthorList() throws ClassNotFoundException, SQLException;
 
-    public abstract int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException;
+    abstract int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException;
 
     public abstract int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException;
 
@@ -26,7 +26,7 @@ public interface AuthorDaoStrategy {
 
     public void setDb(DBStrategy db);
 
-    public void initDao(String driver, String url, String user, String pass);
+    public void initDao(String driver, String url, String user, String pass, String table, String colone, String coltwo, String primarykey);
 
     public void setDRIVER(String DRIVER);
 
@@ -35,6 +35,22 @@ public interface AuthorDaoStrategy {
     public void setUSER(String USER);
 
     public void setPASSWORD(String PASSWORD);
+    
+    public void setTable(String table);
+    
+    public void setColone(String colone);
+    
+    public void setColtwo(String coltwo);
+    
+    public void setPrimarykey(String primarykey);
+    
+    public String getPrimarykey();
+    
+    public String getColtwo();
+    
+    public String getColone();
+    
+    public String getTable();
 
     public String getPASSWORD();
 

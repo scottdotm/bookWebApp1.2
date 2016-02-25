@@ -164,8 +164,7 @@ public class MySqlDBStrategy implements DBStrategy,Serializable {
 	 * @return java.sql.PreparedStatement
 	 * @throws SQLException
 	 */
-	private PreparedStatement buildInsertStatement(Connection conn_loc, String tableName, List colDescriptors)
-	throws SQLException {
+	private PreparedStatement buildInsertStatement(Connection conn_loc, String tableName, List colDescriptors) throws SQLException {
 		StringBuffer sql = new StringBuffer("INSERT INTO ");
 		(sql.append(tableName)).append(" (");
 		final Iterator i=colDescriptors.iterator();
@@ -237,8 +236,7 @@ public class MySqlDBStrategy implements DBStrategy,Serializable {
     }
     
     @Override
-    public final Map<String, Object> findById(String tableName, String primaryKeyFieldName,
-            Object primaryKeyValue) throws SQLException {
+    public final Map<String, Object> findById(String tableName, String primaryKeyFieldName, Object primaryKeyValue) throws SQLException {
 
         String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKeyFieldName + " = ?";
         PreparedStatement stmt = null;

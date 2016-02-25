@@ -15,10 +15,9 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 /**
- *
+ * 
  * @author Scott
  */
-//"com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/books", "root", "admin"
 @Dependent
 public class AuthorDao implements AuthorDaoStrategy,Serializable {
 
@@ -28,36 +27,63 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
     private String url;
     private String user;
     private String pass;
-    private final String TABLE = "author";
-    private final String COLONE = "author_name";
-    private final String COLTWO = "date_added";
+    private String table;
+    private String colone;
+    private String coltwo;
+    private String primarykey;
     private final List COLNAMES = new ArrayList();
     private final List VALUES = new ArrayList();
     
+    /**
+     * Blank Constructor for injectable objects
+     */
+    public AuthorDao() {
+    }
+    
+    /**
+     *
+     * @param driver
+     * @param url
+     * @param user
+     * @param pass
+     * @param table
+     * @param colone
+     * @param primarykey
+     * @param coltwo
+     */
     @Override
-    public void initDao(String driver, String url, String user, String pass){
+    public void initDao(String driver, String url, String user, String pass, String table, String colone, String coltwo, String primarykey){
         setDRIVER(driver);
         setURL(url);
         setUSER(user);
         setPASSWORD(pass);
+        setTable(table);
+        setColone(colone);
+        setColtwo(coltwo);
+        setPrimarykey(primarykey);
     }
     
-
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     @Override
     public List<Author> getAuthorList() throws ClassNotFoundException, SQLException {
         db.openConnection(driver, url, user, pass);
 
         List<Map<String, Object>> rawData
-                = db.findAllRecords(TABLE, 0);
+                = db.findAllRecords(table, 0);
         List<Author> authors = new ArrayList<>();
 
         for (Map rec : rawData) {
             Author author = new Author();
-            Integer id = new Integer(rec.get("author_id").toString());
+            Integer id = new Integer(rec.get(primarykey).toString());
             author.setAuthorId(id);
-            String name = rec.get("author_name") == null ? "" : rec.get("author_name").toString();
+            String name = rec.get(colone) == null ? "" : rec.get(colone).toString();
             author.setAuthorName(name);
-            Date date = rec.get("date_added") == null ? null : (Date) rec.get("date_added");
+            Date date = rec.get(coltwo) == null ? null : (Date) rec.get(coltwo);
             author.setDateAdded(date);
             authors.add(author);
         }
@@ -67,37 +93,85 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
         return authors;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     @Override
     public int deleteAuthorById(Object id) throws ClassNotFoundException, SQLException {
         db.openConnection(driver, url, user, pass);
-        int result = db.deleteById(TABLE, "author_id", id);
+        int result = db.deleteById(table, primarykey, id);
         db.closeConnection();
         return result;
     }
     
+    /**
+     *
+     * @param name
+     * @param date
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     @Override
     public int createOneAuthor(Object name, Object date) throws ClassNotFoundException, SQLException{
         db.openConnection(driver, url, user, pass);
-        COLNAMES.add(COLONE);
-        COLNAMES.add(COLTWO);
+        COLNAMES.add(colone);
+        COLNAMES.add(coltwo);
         VALUES.add(name);
         VALUES.add(date);
-        int result = db.insertOneRecord(TABLE, COLNAMES, VALUES);
+        int result = db.insertOneRecord(table, COLNAMES, VALUES);
         db.closeConnection();
         return result;
     }
     
+    /**
+     *
+     * @param id
+     * @param name
+     * @param date
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     @Override
     public int updateAuthor(Object id, Object name, Object date) throws ClassNotFoundException, SQLException{
-        COLNAMES.add(COLONE);
-        COLNAMES.add(COLTWO);
+        COLNAMES.add(colone);
+        COLNAMES.add(coltwo);
         VALUES.add(name);
         VALUES.add(date);
         db.openConnection(driver, url, user, pass);
-        int result = db.updateRecordById(TABLE, COLNAMES, VALUES, "author_id", id);
+        int result = db.updateRecordById(table, COLNAMES, VALUES, primarykey, id);
         db.closeConnection();
         return result;
     }
+    
+    //Getters and Setters
+
+    @Override
+    public String getTable() {
+        return table;
+    }
+
+    @Override
+    public String getColone() {
+        return colone;
+    }
+
+    @Override
+    public String getColtwo() {
+        return coltwo;
+    }
+
+    @Override
+    public String getPrimarykey() {
+        return primarykey;
+    }
+    
+    
 
     @Override
     public String getDRIVER() {
@@ -118,6 +192,28 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
     public String getPASSWORD() {
         return pass;
     }
+
+    @Override
+    public void setTable(String table) {
+        this.table = table;
+    }
+
+    @Override
+    public void setColone(String colone) {
+        this.colone = colone;
+    }
+
+    @Override
+    public void setColtwo(String coltwo) {
+        this.coltwo = coltwo;
+    }
+
+    @Override
+    public void setPrimarykey(String primarykey) {
+        this.primarykey = primarykey;
+    }
+    
+    
 
     @Override
     public void setDRIVER(String DRIVER) {
