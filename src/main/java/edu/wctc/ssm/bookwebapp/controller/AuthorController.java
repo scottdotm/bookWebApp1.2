@@ -55,7 +55,7 @@ public class AuthorController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         configDbConnection();
-        String deleteId = request.getParameter("id");
+        String deleteId = request.getParameter("deleteid");
         String name = request.getParameter("createname");
         String date = request.getParameter("createdate");
         String updateId = request.getParameter("updateid");
@@ -67,22 +67,16 @@ public class AuthorController extends HttpServlet {
         aus.deleteAuthorById(deleteId);
         }
         //create
-        if(name != null && !"".equals(name)){
-            if(date!=null && !"".equals(date)){
+        if(name != null && !"".equals(name) && date!=null && !"".equals(date)){
                 aus.createOneAuthor(name, date);
-            } else if (date==null || "".equals(date)) {
+        } else if (name != null && !"".equals(name) && date==null || "".equals(date)) {
                 aus.createOneAuthor(name, new Date());
             }
-        }
         //update
-        if(updateId != null && !"".equals(updateId)) {
-            if (name != null && !"".equals(name)) {
-                if (date != null && !"".equals(date)) {
-                    aus.updateAuthor(updateId, updateName, updateDate);
-                } else if (date == null || "".equals(date)) {
-                    aus.updateAuthor(updateId, updateName, new Date());
-                }
-            }
+        if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && date != null && !"".equals(updateDate)) {
+            aus.updateAuthor(updateId, updateName, updateDate);
+        } else if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && date == null || "".equals(updateDate)) {
+            aus.updateAuthor(updateId, updateName, new Date());
         }
         //display table
         List<Author> authors = aus.getAuthorList();

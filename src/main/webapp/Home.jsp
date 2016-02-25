@@ -47,7 +47,7 @@
                         <form id="delete" name="delete" method="POST" action="AuthorController">
                             <h3>Delete Author by ID</h3>
                             <p>This will return the rest of the records in the database.</p>
-                            <input type="text" name="id" min="1" max="3" placeholder="Record ID to Deleted">
+                            <input type="text" name="deleteid" min="1" max="3" placeholder="Record ID to Deleted">
                             <input class="btn btn-info" type="submit" name="submit" value="Show me the Table">
                         </form>
                     </div>

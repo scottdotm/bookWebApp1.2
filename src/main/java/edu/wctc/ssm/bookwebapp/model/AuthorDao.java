@@ -125,6 +125,8 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
         VALUES.add(name);
         VALUES.add(date);
         int result = db.insertOneRecord(table, COLNAMES, VALUES);
+        COLNAMES.clear();
+        VALUES.clear();
         db.closeConnection();
         return result;
     }
@@ -146,6 +148,8 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
         VALUES.add(date);
         db.openConnection(driver, url, user, pass);
         int result = db.updateRecordById(table, COLNAMES, VALUES, primarykey, id);
+        COLNAMES.clear();
+        VALUES.clear();
         db.closeConnection();
         return result;
     }
