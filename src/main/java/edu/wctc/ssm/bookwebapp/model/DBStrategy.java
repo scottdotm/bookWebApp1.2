@@ -27,4 +27,5 @@ public interface DBStrategy {
     abstract int updateRecordById(String tableName, List<String> colNames, List<Object> colValues, String pkColName, Object value) throws SQLException;
 
     abstract int insertOneRecord(String tablename, List<String> colNames, List<Object> values) throws SQLException;
+    
 }

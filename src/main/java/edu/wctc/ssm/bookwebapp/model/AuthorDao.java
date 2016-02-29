@@ -153,6 +153,26 @@ public class AuthorDao implements AuthorDaoStrategy,Serializable {
         db.closeConnection();
         return result;
     }
+
+    /**
+     *
+     * @param authorId
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    @Override
+    public Author getAuthorById(Integer authorId) throws ClassNotFoundException, SQLException {
+        db.openConnection(driver, url, user, pass);
+        
+        Map<String,Object> rawRec = db.findById(table, colone, authorId);
+        Author author = new Author();
+        author.setAuthorId((Integer)rawRec.get(primarykey));
+        author.setAuthorName(rawRec.get(colone).toString());
+        author.setDateAdded((Date)rawRec.get(coltwo));
+        
+        return author;
+    }
     
     //Getters and Setters
 

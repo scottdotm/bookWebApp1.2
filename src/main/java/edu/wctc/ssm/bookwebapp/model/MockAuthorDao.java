@@ -151,6 +151,11 @@ public class MockAuthorDao implements AuthorDaoStrategy,Serializable {
     public void initDao(String driver, String url, String user, String pass, String table, String colone, String coltwo, String primarykey) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Author getAuthorById(Integer authorId) throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

@@ -24,7 +24,7 @@ import javax.inject.Inject;
  */
 @WebServlet(name = "AuthorController", urlPatterns = {"/AuthorController"})
 public class AuthorController extends HttpServlet {
-    
+
     // db config init params from web.xml
     private String driverClass;
     private String url;
@@ -34,11 +34,15 @@ public class AuthorController extends HttpServlet {
     private String colone;
     private String coltwo;
     private String primarykey;
+    
+    private static final String EDIT_DELETE_ACTION = "editDelete";
 
     @Inject
     AuthorService aus;
-
+    
+    private static final String EDIT_PAGE = "Edit.jsp";
     private static final String DEST_PAGE = "Authors.jsp";
+    private static final String ACTION_PARAM = "action";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,43 +58,60 @@ public class AuthorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try{
-        configDbConnection();
-        String deleteId = request.getParameter("deleteid");
-        String name = request.getParameter("createname");
-        String date = request.getParameter("createdate");
-        String updateId = request.getParameter("updateid");
-        String updateName = request.getParameter("updatename");
-        String updateDate = request.getParameter("updatedate");
-        
-        //delete
-        if(deleteId != null && !"".equals(deleteId)){
-        aus.deleteAuthorById(deleteId);
-        }
-        //create
-        if (name != null && !"".equals(name) && date != null && !"".equals(date)) {
-            aus.createOneAuthor(name, date);
-        } else if (name != null && !"".equals(name) && date == null || "".equals(date)) {
-            aus.createOneAuthor(name, new Date());
-        }
-        //update
-        if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && date != null && !"".equals(updateDate)) {
-            aus.updateAuthor(updateId, updateName, updateDate);
-        } else if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && date == null || "".equals(updateDate)) {
-            aus.updateAuthor(updateId, updateName, new Date());
-        }
-        //display table
-        List<Author> authors = aus.getAuthorList();
-        request.setAttribute("authors", authors);
-        
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AuthorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //try {
+            configDbConnection();
+            //String action = request.getParameter("image");
+            String deleteId = request.getParameter("deleteid");
+            String createName = request.getParameter("createname");
+            String createDate = request.getParameter("createdate");
+            String updateId = request.getParameter("updateid");
+            String updateName = request.getParameter("updatename");
+            String updateDate = request.getParameter("updatedate");
+            String id = request.getParameter("authorId");
+            String name = request.getParameter("authorName");
+            String date = request.getParameter("authorDate");
+            String editId = request.getParameter("editId");
+            //String imageAction = request.getParameter(IMAGE_PARAM);
+            String action = request.getParameter(ACTION_PARAM);
+             
+//            switch (action) {
+//            case EDIT_DELETE_ACTION:
+//                if (editId != null && "".equals(editId)) {
+//                    Author author =aus.getAuthorById(editId);
+//                    request.setAttribute("author", author);
+//                }
+//                break;
+//        }
+
+            //delete
+            if (deleteId != null && !"".equals(deleteId)) {
+                aus.deleteAuthorById(deleteId);
+            }
+            //create
+            if (createName != null && !"".equals(createName) && createDate != null && !"".equals(createDate)) {
+                aus.createOneAuthor(createName, createDate);
+            } else if (createName != null && !"".equals(createName) && createDate == null || "".equals(createDate)) {
+                aus.createOneAuthor(createName, new Date());
+            }
+            //update
+            if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && createDate != null && !"".equals(updateDate)) {
+                aus.updateAuthor(updateId, updateName, updateDate);
+            } else if (updateId != null && !"".equals(updateId) && updateName != null && !"".equals(updateName) && createDate == null || "".equals(updateDate)) {
+                aus.updateAuthor(updateId, updateName, new Date());
+            }
+            //display table
+            List<Author> authors = aus.getAuthorList();
+            request.setAttribute("authors", authors);
+
+//        } catch (ClassNotFoundException | SQLException ex) {
+//            Logger.getLogger(AuthorController.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
 
         RequestDispatcher view = request.getRequestDispatcher(DEST_PAGE);
         view.forward(request, response);
-    }
-    
+                }
+//    }
+
     //web.xml config
     private void configDbConnection() {
         aus.getDao().initDao(driverClass, url, username, password, table, colone, coltwo, primarykey);
@@ -143,8 +164,9 @@ public class AuthorController extends HttpServlet {
         return "Book Web App made for Dist. Java";
     }// </editor-fold>
     //Override for web.xml
+
     @Override
-    public void init() throws ServletException{
+    public void init() throws ServletException {
         driverClass = getServletContext().getInitParameter("db.driver.class");
         url = getServletContext().getInitParameter("db.url");
         username = getServletContext().getInitParameter("db.username");
@@ -153,7 +175,7 @@ public class AuthorController extends HttpServlet {
         colone = getServletContext().getInitParameter("db.colone");
         coltwo = getServletContext().getInitParameter("db.coltwo");
         primarykey = getServletContext().getInitParameter("db.primarykey");
-        
+
     }
-    
+
 }

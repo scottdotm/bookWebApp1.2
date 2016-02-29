@@ -22,22 +22,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">All Authors</div>
                     <div class="panel-body">
-                        <p>Displayed a List of Author objects created in our AuthorService().  This is not currently hooked up to a Database. </p>
+                        <p>Displays a List of Author objects collected from a database.</p>
                     </div>
-                    <table class="table table-hover" width="600" border="1" cellspacing="2" cellpadding="5">
-                        <tr>
-                            <th  class=" ">Author ID</th>
-                            <th  class=" ">Name</th>
-                            <th  class=" ">Date Added</th>
-                        </tr>
-                        <c:forEach var="a" items="${authors}">
+                    <form method="POST" action="AuthorController?action=editDelete">
+                        <table class="table table-hover" width="600" border="1" cellspacing="2" cellpadding="5">
                             <tr>
-                                <td class="info"> ${a.authorId} </td>
-                                <td class="info"> ${a.authorName} </td>
-                                <td class="info"><fmt:formatDate pattern="MM/dd/yyyy" value="${a.dateAdded}"></fmt:formatDate></td>
+                                <th  class=" ">Author ID</th>
+                                <th  class=" ">Name</th>
+                                <th  class=" ">Date Added</th>
                             </tr>
-                        </c:forEach>
-                    </table>
+                            <c:forEach var="a" items="${authors}">
+                                <tr>
+                                    <td class="info"><input type="image" class="glyphicon glyphicon-pencil" name="editId" value="${a.authorId}"></td>
+                                    <td class="info">${a.authorName}</td>
+                                    <td class="info"><fmt:formatDate pattern="MM/dd/yyyy" value="${a.dateAdded}"></fmt:formatDate></td>
+                                    </tr>
+                            </c:forEach>
+                        </table>
+                    </form>
                     <center>
                         <form id="back" name="back" method="POST" action="Home.jsp" style="padding:10px;">
                             <input class="btn btn-info" type="submit" name="submit" value="Take me Home">
